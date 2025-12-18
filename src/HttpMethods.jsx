@@ -1,15 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import axios from 'axios';
+
 
 const HttpMethods = () => {
     const baseUrl = "http://localhost:7000/";
+    const [currentData,setCurrentData] = useState([]);
     const getStudents = () => {
         axios.get(`${baseUrl}get-student`).then((result)=>{
-            console.log(result.data);
+           setCurrentData(result.data);
         }).catch((error)=>console.log(error))
     }
     const myUser = {
-        "Name":"Ramcharan",
+        "name":"Ramcharan",
         "age":23
     }
     const addStudents = () => {
@@ -21,6 +23,11 @@ const HttpMethods = () => {
         <h1>This is the frontend</h1>
         <button onClick={getStudents}>get student</button>
         <button onClick={addStudents}>add student</button>
+        <div>
+            {currentData.map((ele,idx)=>
+                (<h3 key={idx}>{ele.name}</h3>)
+            )}
+        </div>
      </>
 }
 export default HttpMethods;
